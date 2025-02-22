@@ -1,14 +1,11 @@
 <?php 
-// الحصول على عنوان IP الخارجي
 $ip = file_get_contents('http://ipinfo.io/ip');
 if ($ip === false) {
     $ip = 'Unknown';
 }
 
-// الحصول على الـ User-Agent
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-// تحسين تعبيرات regex لتغطية المزيد من المتصفحات وأنظمة التشغيل
 preg_match('/(Firefox|Chrome|Brave|Safari|Edge|Opera|MSIE|Trident)[\/\s]?([0-9.]*)/', $userAgent, $bMatch);
 $browser = $bMatch[1] ?? 'Unknown';
 $browserVersion = $bMatch[2] ?? 'Unknown';
@@ -23,7 +20,7 @@ $response = file_get_contents("http://ip-api.com/json/{$ip}");
 $geoData = json_decode($response, true);
 
 if ($geoData && $geoData['status'] === 'fail') {
-    echo "Error: " . $geoData['message'] . "\n"; // رسالة توضح السبب
+    echo "Error: " . $geoData['message'] . "\n";
     $country = 'Unknown';
     $region = 'Unknown';
     $city = 'Unknown';
@@ -35,7 +32,7 @@ if ($geoData && $geoData['status'] === 'fail') {
 
 $data = "====================\n";
 $data .= "IP: $ip\n";
-$data .= "Location: $city, $region, $country\n";  // إضافة الموقع
+$data .= "Location: $city, $region, $country\n";
 $data .= "User-Agent: $userAgent\n";
 $data .= "Browser: $browser\n";
 $data .= "Browser-Version: $browserVersion\n";
